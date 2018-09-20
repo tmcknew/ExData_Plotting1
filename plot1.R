@@ -10,7 +10,7 @@ library(lubridate)
 # make sure the data is here
 data_url <- "https://d396qusza40orc.cloudfront.net/exdata%2Fdata%2Fhousehold_power_consumption.zip"
 data_archive <- "exdata%2Fdata%2Fhousehold_power_consumption.zip"
-data_file <- "household_power_consumption.txt"
+data_file <- "household_power_consumption_reduced.txt"
 # ensure files are present
 if (!file.exists(data_file)) {
     if (!file.exists(data_archive)) {
@@ -32,4 +32,12 @@ hpc <- fread("egrep '^Date|^1\\/2\\/2007|^2\\/2\\/2007' household_power_consumpt
 hpc <- mutate(hpc, datetime = as.POSIXct(strptime(paste(hpc$Date,hpc$Time), 
                                                   format="%d/%m/%Y %T") ) )
 
+png(filename = "plot1.png",
+    width = 480, height = 480, units = "px", pointsize = 12)
+
 # make plot 1
+hist(hpc$Global_active_power, 
+     col = "red",
+     main = "Global Active Power",
+     xlab = "Global Active Power (kilowatts)"
+)
