@@ -26,13 +26,19 @@ hpc <- mutate(hpc, datetime = as.POSIXct(strptime(paste(hpc$Date,hpc$Time),
                                                   format="%d/%m/%Y %T") ) )
 
 # open output file
-png(filename = "plot1.png",
+png(filename = "plot2.png",
     width = 480, height = 480, units = "px", bg = "transparent")
 
-# make plot 1
-hist(hpc$Global_active_power, 
-     col = "red",
-     main = "Global Active Power",
-     xlab = "Global Active Power (kilowatts)")
+# make plot 2
+with(hpc,
+     plot(datetime,Global_active_power,
+     xlab = "",
+     ylab = "Global Active Power (kilowatts)",
+     type = "n")
+    )
+
+with(hpc,
+     lines(datetime,Global_active_power)
+    )
 
 dev.off()
