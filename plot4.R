@@ -26,13 +26,34 @@ hpc <- mutate(hpc, datetime = as.POSIXct(strptime(paste(hpc$Date,hpc$Time),
                                                   format = "%d/%m/%Y %T") ) )
 
 # open output file
-png(filename = "plot2.png",
+png(filename = "plot4.png",
     width = 480, height = 480, units = "px", bg = "transparent")
 
-# make plot 2
+# make plot 4
+par(mfrow = c(2,2))
+# make subplot 1
 with(hpc, plot(datetime,Global_active_power,
-     xlab = "", ylab = "Global Active Power (kilowatts)", type = "n"))
-
+               xlab = "", ylab = "Global Active Power (kilowatts)", type = "n"))
 with(hpc, lines(datetime,Global_active_power))
+
+# make subplot 2
+with(hpc, plot(datetime,Voltage,
+               xlab = "datetime", ylab = "Voltage", type = "n"))
+with(hpc, lines(datetime,Voltage))
+
+# make subplot 3
+with(hpc,
+     plot(datetime,Sub_metering_1, xlab = "", ylab = "Energy Sub Metering", type = "n"))
+with(hpc, lines(datetime,Sub_metering_1, col = "black"))
+with(hpc, lines(datetime,Sub_metering_2, col = "red"))
+with(hpc, lines(datetime,Sub_metering_3, col = "blue"))
+legend(bty = "n", topright", lty = c(1,1,1), col = c("black", "red", "blue"),
+       legend = c("Sub_metering_1", "Sub_metering_2", "Sub_metering_3"))
+
+# make subplot 4
+with(hpc, plot(datetime,Global_reactive_power,
+               xlab = "datetime", ylab = "Global_reactive_power", type = "n"))
+with(hpc, lines(datetime,Global_reactive_power))
+
 
 dev.off()
