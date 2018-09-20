@@ -18,12 +18,12 @@ if (!file.exists(data_file)) {
 # read the data for 2007-02-01 and 2007-02-02
 # Note that in this dataset missing values are coded as ?.
 hpc <- fread("egrep '^Date|^1\\/2\\/2007|^2\\/2\\/2007' household_power_consumption.txt", 
-             na.strings="?")
+             na.strings = "?")
 
 # convert the Date and Time variables to Date/Time classes in R using the 
 # strptime() and as.POSIXct()
 hpc <- mutate(hpc, datetime = as.POSIXct(strptime(paste(hpc$Date,hpc$Time), 
-                                                  format="%d/%m/%Y %T") ) )
+                                                  format = "%d/%m/%Y %T") ) )
 
 # open output file
 png(filename = "plot2.png",
